@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
     t.string "password_digest"
     t.boolean "email_verified"
     t.string "phone_number"
-    t.string "avatar"
+    t.string "avatar", default: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/84c20033850498.56ba69ac290ea.png"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

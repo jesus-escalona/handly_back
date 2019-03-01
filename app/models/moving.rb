@@ -33,7 +33,7 @@ class Moving < ApplicationRecord
     when 'Apt Move'
       1.7
     else
-      0
+      return 0
     end
 
     (43.605 * (distance ** 0.447) * price_factor).ceil

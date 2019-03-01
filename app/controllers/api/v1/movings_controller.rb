@@ -14,9 +14,14 @@ class Api::V1::MovingsController < ApplicationController
     @distance = Moving.get_distance(origin[:latlng], destination[:latlng])
     if @distance == -1
       render json: { error: "We could not calculate a route between these points"}
+      return
     end
 
     @estimate = Moving.get_estimate(@distance, moving_type)
+    if @estimate == 0
+      render json: { error: "Options not found, please try again"}
+      return
+    end
 
     @moving = Moving.new(
         origin_lat: origin[:latlng][:lat],
@@ -31,7 +36,9 @@ class Api::V1::MovingsController < ApplicationController
         distance: @distance,
         moving_type: moving_type
         )
-    render json: { moving_estimate: EstimateSerializer.new(@moving) }, status: :accepted
+
+    @movers = Mover.super_query
+    render json: { moving_estimate: EstimateSerializer.new(@moving), companies: MoverSerializer.new(@movers) }, status: :accepted
   end
 
   private
