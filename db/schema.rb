@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
     t.index ["client_id"], name: "index_items_on_client_id"
   end
 
+  create_table "move_types", force: :cascade do |t|
+    t.string "moving_type"
+    t.decimal "price_factor", precision: 3, scale: 2, default: "1.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "movers", force: :cascade do |t|
     t.string "company_name"
     t.string "admin_name"
@@ -43,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
     t.boolean "verified"
     t.string "logo"
     t.boolean "insured"
+    t.decimal "bid_factor", precision: 3, scale: 2, default: "1.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -64,14 +72,16 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
     t.integer "moving_rating"
     t.text "moving_review"
     t.decimal "distance", precision: 16, scale: 2
-    t.string "moving_type"
+    t.bigint "move_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_movings_on_client_id"
+    t.index ["move_type_id"], name: "index_movings_on_move_type_id"
     t.index ["mover_id"], name: "index_movings_on_mover_id"
   end
 
   add_foreign_key "items", "clients"
   add_foreign_key "movings", "clients"
+  add_foreign_key "movings", "move_types"
   add_foreign_key "movings", "movers"
 end

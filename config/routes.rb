@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get '/profile', to: 'clients#profile'
       get '/reviews', to: 'movings#reviews'
       post '/estimate', to: 'movings#estimate'
+      resources :move_types, only: [:index]
       resources :movings
       resources :movers, only: [:index]
       resources :clients

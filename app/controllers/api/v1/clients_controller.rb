@@ -19,9 +19,21 @@ class Api::V1::ClientsController < ApplicationController
     end
   end
 
+  def update
+    if @client.update(client_patch_params)
+      render json: { client: ClientSerializer.new(@client) }, status: :created
+    else
+      render json: { messages: @client.errors.full_messages }, status: :not_acceptable
+    end
+  end
+
   private
 
   def client_params
     params.permit(:name, :email, :password)
+  end
+
+  def client_patch_params
+    params.permit(:name, :email, :avatar, :phone_number)
   end
 end

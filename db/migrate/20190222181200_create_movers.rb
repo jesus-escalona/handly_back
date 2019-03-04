@@ -7,6 +7,7 @@ class CreateMovers < ActiveRecord::Migration[5.2]
       t.boolean :verified
       t.string :logo
       t.boolean :insured
+      t.decimal :bid_factor, precision: 3, scale: 2, default: 1
 
       t.timestamps
     end

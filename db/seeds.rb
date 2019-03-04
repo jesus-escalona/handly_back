@@ -5,10 +5,31 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+MoveType.destroy_all
 Moving.destroy_all
 Item.destroy_all
 Client.destroy_all
 Mover.destroy_all
+
+# Create Move Type
+move_types = [
+    {
+        text: 'Small Move',
+        factor: 1
+    },
+    {
+        text: 'Room Move',
+        factor: 1.4
+    },
+    {
+        text: 'Apt Move',
+        factor: 1.7
+    }
+]
+
+move_types.each do |t|
+  MoveType.create(moving_type: t[:text], price_factor: t[:factor])
+end
 
 10.times {
   # Creating the Client
@@ -29,7 +50,8 @@ Mover.destroy_all
       address: Faker::Address.full_address,
       logo: Faker::Company.logo,
       verified: Faker::Boolean.boolean,
-      insured: Faker::Boolean.boolean
+      insured: Faker::Boolean.boolean,
+      bid_factor: rand(0.85...1.15)
   )
 
   # Creating the moving
@@ -39,7 +61,7 @@ Mover.destroy_all
   destination_address = Faker::Address.full_address.split(',')
   destination_state = destination_address[2].strip.split(' ')[0]
 
-  distance = rand(1..10)
+  distance = rand(1...10)
   estimate = 30 + (distance * 8)
 
   review = [
@@ -64,7 +86,7 @@ Mover.destroy_all
       final_price: estimate,
       moving_rating: rand(4...5),
       moving_review: "#{company_name} #{review.sample}",
-      moving_type: 'Small Move (1 or 2 items)'
+      move_type_id: rand(1...3)
   )
 
   # Create Items

@@ -17,7 +17,7 @@ class CreateMovings < ActiveRecord::Migration[5.2]
       t.integer :moving_rating
       t.text :moving_review
       t.decimal :distance, precision: 16, scale: 2
-      t.string :moving_type
+      t.references :move_type, foreign_key: true
 
       t.timestamps
     end

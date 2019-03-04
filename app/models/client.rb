@@ -7,5 +7,6 @@ class Client < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates_presence_of :name
   validates_uniqueness_of :email
-  validates :password, :presence => true, :length => {:within => 6..40}
+  validates_presence_of :email
+  validates :password, :presence => true, :length => {:within => 6..40}, on: :create
 end

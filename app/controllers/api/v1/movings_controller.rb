@@ -9,7 +9,7 @@ class Api::V1::MovingsController < ApplicationController
   def estimate
     origin = estimate_params[:origin]
     destination = estimate_params[:destination]
-    moving_type = estimate_params[:move_type]
+    @move_type = MoveType.find(estimate_params[:move_type])
 
     @distance = Moving.get_distance(origin[:latlng], destination[:latlng])
     if @distance == -1
@@ -17,7 +17,7 @@ class Api::V1::MovingsController < ApplicationController
       return
     end
 
-    @estimate = Moving.get_estimate(@distance, moving_type)
+    @estimate = Moving.get_estimate(@distance, @move_type)
     if @estimate == 0
       render json: { error: "Options not found, please try again"}
       return
@@ -33,8 +33,7 @@ class Api::V1::MovingsController < ApplicationController
         destination_administrative: destination[:administrative],
         destination_address: destination[:name],
         estimate: @estimate,
-        distance: @distance,
-        moving_type: moving_type
+        distance: @distance
         )
 
     @movers = Mover.super_query

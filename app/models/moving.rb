@@ -23,19 +23,7 @@ class Moving < ApplicationRecord
 
   end
 
-  def self.get_estimate(distance, moving_type)
-
-    price_factor = case moving_type
-    when 'Small Move'
-      1
-    when 'Room Move'
-      1.4
-    when 'Apt Move'
-      1.7
-    else
-      return 0
-    end
-
-    (43.605 * (distance ** 0.447) * price_factor).ceil
+  def self.get_estimate(distance, move_type)
+    (43.605 * (distance ** 0.447) * move_type.price_factor).ceil
   end
 end
