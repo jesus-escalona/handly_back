@@ -2,7 +2,7 @@ class Api::V1::MovingsController < ApplicationController
   skip_before_action :authorized, :only => [:reviews, :estimate]
 
   def reviews
-    @movings = Moving.last(5)
+    @movings = Moving.first(5)
     render json: { reviews: MovingSerializer.new(@movings) }, status: :accepted
   end
 
@@ -33,11 +33,27 @@ class Api::V1::MovingsController < ApplicationController
         destination_administrative: destination[:administrative],
         destination_address: destination[:name],
         estimate: @estimate,
-        distance: @distance
+        distance: @distance,
+        move_type_id: @move_type.id
         )
 
     @movers = Mover.super_query
     render json: { moving_estimate: EstimateSerializer.new(@moving), companies: MoverSerializer.new(@movers) }, status: :accepted
+  end
+
+  def create
+    create_moving_params[:client] = @client
+    @mover = Mover.find(create_moving_params[:mover_id])
+    final_price = (@mover[:bid_factor] * create_moving_params[:estimate].to_i).round(2)
+    create_moving_params[:final_price] = final_price
+
+    @moving = Moving.new(create_moving_params)
+    if @moving.save
+      render json: {message: 'Moving Booked!'}, status: :ok
+    else
+      render json: { error: @moving.errors.full_messages }, status: :not_acceptable
+    end
+
   end
 
   private
@@ -48,6 +64,10 @@ class Api::V1::MovingsController < ApplicationController
         :origin => [:administrative, :name, latlng: [:lat, :lng]],
         :destination => [:administrative, :name, latlng: [:lat, :lng]]
     )
+  end
+
+  def create_moving_params
+    params.require(:moving).permit!
   end
 
 end

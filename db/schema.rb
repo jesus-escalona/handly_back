@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
   create_table "move_types", force: :cascade do |t|
     t.string "moving_type"
     t.decimal "price_factor", precision: 3, scale: 2, default: "1.0"
+    t.string "icon"
+    t.integer "move_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

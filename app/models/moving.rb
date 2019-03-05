@@ -1,6 +1,7 @@
 class Moving < ApplicationRecord
   belongs_to :client
   belongs_to :mover
+  belongs_to :move_type
   has_many :items, through: :client
 
   def self.get_distance(origin, destination)
@@ -20,7 +21,8 @@ class Moving < ApplicationRecord
     response = RestClient.post("https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=#{Rails.application.credentials.secret_bing_api_key}", payload.to_json)
     json_response = JSON.parse(response)
     json_response['resourceSets'][0]['resources'][0]['results'][0]['travelDistance']
-
+  rescue
+    -1
   end
 
   def self.get_estimate(distance, move_type)

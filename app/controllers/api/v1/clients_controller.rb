@@ -6,14 +6,14 @@ class Api::V1::ClientsController < ApplicationController
   end
 
   def profile
-    render json: { client: ClientSerializer.new(@client) }, status: :accepted
+    render json: { client: ClientSerializer.new(@client), movings: MovingCreatorSerializer.new(@client.movings) }, status: :accepted
   end
 
   def create
     @client = Client.create(client_params)
     if @client.valid?
       @token = encode_token(client_id: @client.id)
-      render json: { client: ClientSerializer.new(@client), jwt: @token }, status: :created
+      render json: { client: ClientSerializer.new(@client), jwt: @token, movings: MovingCreatorSerializer.new(@client.movings) }, status: :created
     else
       render json: { messages: @client.errors.full_messages }, status: :not_acceptable
     end
@@ -21,7 +21,7 @@ class Api::V1::ClientsController < ApplicationController
 
   def update
     if @client.update(client_patch_params)
-      render json: { client: ClientSerializer.new(@client) }, status: :created
+      render json: { client: ClientSerializer.new(@client), movings: MovingCreatorSerializer.new(@client.movings) }, status: :created
     else
       render json: { messages: @client.errors.full_messages }, status: :not_acceptable
     end

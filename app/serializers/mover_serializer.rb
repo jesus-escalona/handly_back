@@ -1,6 +1,6 @@
 class MoverSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :company_name, :logo, :insured, :average_rating
+  attributes :company_name, :logo, :insured, :average_rating, :bid_factor
   attribute :reputation do |object|
     object.movings.map do |moving|
       {

@@ -7,7 +7,7 @@ class Api::V1::AuthController < ApplicationController
     if client && client.authenticate(client_login_params[:password])
       # encode token comes from ApplicationController
       token = encode_token(client_id: client.id)
-      render json: { client: ClientSerializer.new(client), jwt: token }, status: :accepted
+      render json: { client: ClientSerializer.new(client), jwt: token, movings: MovingCreatorSerializer.new(client.movings) }, status: :accepted
     else
       render json: { messages: ['Invalid email or password'] }, status: :unauthorized
     end

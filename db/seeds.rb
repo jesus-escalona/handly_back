@@ -15,20 +15,31 @@ Mover.destroy_all
 move_types = [
     {
         text: 'Small Move',
-        factor: 1
+        factor: 1,
+        icon: 'dolly',
+        value: 1
     },
     {
         text: 'Room Move',
-        factor: 1.4
+        factor: 1.4,
+        icon: 'dolly flatbed',
+        value: 2
     },
     {
         text: 'Apt Move',
-        factor: 1.7
+        factor: 1.7,
+        icon: 'truck',
+        value: 3
     }
 ]
 
 move_types.each do |t|
-  MoveType.create(moving_type: t[:text], price_factor: t[:factor])
+  MoveType.create(
+      moving_type: t[:text],
+      price_factor: t[:factor],
+      icon: t[:icon],
+      move_value: t[:value]
+  )
 end
 
 10.times {
@@ -86,7 +97,7 @@ end
       final_price: estimate,
       moving_rating: rand(4...5),
       moving_review: "#{company_name} #{review.sample}",
-      move_type_id: rand(1...3)
+      move_type_id: MoveType.first.id
   )
 
   # Create Items
