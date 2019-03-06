@@ -17,19 +17,29 @@ move_types = [
         text: 'Small Move',
         factor: 1,
         icon: 'dolly',
-        value: 1
+        value: 1,
+        items: 2
     },
     {
         text: 'Room Move',
         factor: 1.4,
         icon: 'dolly flatbed',
-        value: 2
+        value: 2,
+        items: 5
     },
     {
         text: 'Apt Move',
         factor: 1.7,
         icon: 'truck',
-        value: 3
+        value: 3,
+        items: 10
+    },
+    {
+        text: 'House Move',
+        factor: 2,
+        icon: 'home',
+        value: 4,
+        items: 15
     }
 ]
 
@@ -95,9 +105,10 @@ end
       distance: distance,
       estimate: estimate,
       final_price: estimate,
-      moving_rating: rand(4...5),
+      moving_rating: rand(3...5),
       moving_review: "#{company_name} #{review.sample}",
-      move_type_id: MoveType.first.id
+      move_type_id: MoveType.first.id,
+      status: "Completed"
   )
 
   # Create Items

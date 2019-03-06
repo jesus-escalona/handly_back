@@ -15,6 +15,7 @@ class CreateMovings < ActiveRecord::Migration[5.2]
       t.decimal :estimate, precision: 16, scale: 2
       t.decimal :final_price, precision: 16, scale: 2
       t.integer :moving_rating
+      t.string :status
       t.text :moving_review
       t.decimal :distance, precision: 16, scale: 2
       t.references :move_type, foreign_key: true

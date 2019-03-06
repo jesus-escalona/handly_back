@@ -43,6 +43,7 @@ class Api::V1::MovingsController < ApplicationController
 
   def create
     create_moving_params[:client] = @client
+    create_moving_params[:status] = 'pending'
     @mover = Mover.find(create_moving_params[:mover_id])
     final_price = (@mover[:bid_factor] * create_moving_params[:estimate].to_i).round(2)
     create_moving_params[:final_price] = final_price
@@ -54,6 +55,21 @@ class Api::V1::MovingsController < ApplicationController
       render json: { error: @moving.errors.full_messages }, status: :not_acceptable
     end
 
+  end
+
+  def update
+    @moving = Moving.find(params[:id])
+    rating = rating_params[:rating].to_i
+    if @moving.client == @client
+      if @moving.update(moving_rating: rating)
+        render json: {message: 'Success'}, status: :ok
+      else
+        render json: {message: @moving.errors.full_messages }, status: :not_acceptable
+
+      end
+    else
+      render json: {message: 'So what are you exactly trying to do?'}, status: :not_acceptable
+    end
   end
 
   private
@@ -68,6 +84,10 @@ class Api::V1::MovingsController < ApplicationController
 
   def create_moving_params
     params.require(:moving).permit!
+  end
+
+  def rating_params
+    params.permit(:rating)
   end
 
 end

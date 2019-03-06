@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
     t.decimal "price_factor", precision: 3, scale: 2, default: "1.0"
     t.string "icon"
     t.integer "move_value"
+    t.integer "max_items"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -72,6 +73,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_184945) do
     t.decimal "estimate", precision: 16, scale: 2
     t.decimal "final_price", precision: 16, scale: 2
     t.integer "moving_rating"
+    t.string "status"
     t.text "moving_review"
     t.decimal "distance", precision: 16, scale: 2
     t.bigint "move_type_id"

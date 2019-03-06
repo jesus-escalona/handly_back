@@ -4,6 +4,8 @@ class Moving < ApplicationRecord
   belongs_to :move_type
   has_many :items, through: :client
 
+  validates :moving_rating, :inclusion => { :in => 0...5 }
+
   def self.get_distance(origin, destination)
 
     payload = {
