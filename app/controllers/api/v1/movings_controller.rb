@@ -44,6 +44,7 @@ class Api::V1::MovingsController < ApplicationController
   def create
     create_moving_params[:client] = @client
     create_moving_params[:status] = 'pending'
+    create_moving_params[:moving_rating] = 0
     @mover = Mover.find(create_moving_params[:mover_id])
     final_price = (@mover[:bid_factor] * create_moving_params[:estimate].to_i).round(2)
     create_moving_params[:final_price] = final_price
@@ -60,9 +61,10 @@ class Api::V1::MovingsController < ApplicationController
   def update
     @moving = Moving.find(params[:id])
     rating = rating_params[:rating].to_i
+    review = rating_params[:review]
     if @moving.client == @client
-      if @moving.update(moving_rating: rating)
-        render json: {message: 'Success'}, status: :ok
+      if @moving.update(moving_rating: rating, moving_review: review)
+        render json: { client: ClientSerializer.new(@client), movings: MovingCreatorSerializer.new(@client.movings) }, status: :accepted
       else
         render json: {message: @moving.errors.full_messages }, status: :not_acceptable
 
@@ -87,7 +89,7 @@ class Api::V1::MovingsController < ApplicationController
   end
 
   def rating_params
-    params.permit(:rating)
+    params.permit(:rating, :review)
   end
 
 end
