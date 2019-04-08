@@ -19,9 +19,6 @@ Rails 5.2.2
 ## Built With
 
 * [Ruby on Rails](https://rubyonrails.org/) - The framework used
-* [Yarn](https://yarnpkg.com/lang/en/) - Dependency Management
-* [Redux](https://redux.js.org/) - State Management
-* [Mapbox](https://www.mapbox.com/) - Embed custom maps.
 
 ## Contributing
 
