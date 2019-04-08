@@ -1,24 +1,42 @@
-# README
+# HANDLY SEARCH BACK END
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Single-Page Web app that helps you get an estimate for your relocation needs, and matching you with different moving companies.
 
-Things you may want to cover:
+## Getting Started
+```
+Clone it
+install dependencies -> bundle install
+Start the server -> Rails s
+```
 
-* Ruby version
+### Prerequisites
 
-* System dependencies
+```
+Ruby 2.5.3
+Rails 5.2.2
+```
 
-* Configuration
+## Built With
 
-* Database creation
+* [Ruby on Rails](https://rubyonrails.org/) - The framework used
+* [Yarn](https://yarnpkg.com/lang/en/) - Dependency Management
+* [Redux](https://redux.js.org/) - State Management
+* [Mapbox](https://www.mapbox.com/) - Embed custom maps.
 
-* Database initialization
+## Contributing
 
-* How to run the test suite
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-* Services (job queues, cache servers, search engines, etc.)
+## Authors
 
-* Deployment instructions
+* **Jesus Escalona** - *Initial work* - [Jesus-Escalona](https://github.com/jesus-escalona)
 
-* ...
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Everyone whose libraries are a dependency to this project, thank you.
+* Inspiration from trying to move things myself and getting really different prices from moving companies.
+
